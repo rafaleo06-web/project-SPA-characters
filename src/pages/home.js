@@ -1,15 +1,24 @@
-const home = () => {
+import getData from "../utils/getData.js";
+
+const home = async () => {
+  const characters = await getData();
   const view = /*html*/ `
   <div class="characters">
-    <article class="character-item">
-      <a href="#/1/">
-      <img src="image" alt="name" />
-      <h2>Name</h2>
-      </a>
-    </article>
+    ${characters.results
+      .map(
+        (character) => /*html*/ `
+      <article class="character-item">
+        <a href="#/${character.id}/">
+          <img src="${character.image}" alt="${character.name}" />
+          <h2>${character.name}</h2>
+        </a>
+      </article>
+    `
+      )
+      .join("")} 
   </div>
   `;
-  return view;
+  return view; //join convierte array a string, sin ningun separador
 };
 
 export default home;
